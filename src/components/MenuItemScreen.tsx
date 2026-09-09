@@ -50,7 +50,7 @@ export default function AddMenuItemScreen({ onSave }: AddMenuItemScreenProps) {
 
       <Text style={styles.label}>Description</Text>
       <TextInput
-        style={[styles.input, styles.textArea]}
+        style={[styles.input, styles.multiline]}
         value={description}
         onChangeText={setDescription}
         placeholder="Describe the dish"
