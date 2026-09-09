@@ -21,13 +21,16 @@ export default function MenuListScreen({ items, onAddPress }: MenuListScreenProp
           keyExtractor={(_item: MenuItem, index: number) => index.toString()}
           contentContainerStyle={styles.listContent}
           renderItem={({ item }: { item: MenuItem }) => (
-            <View style={styles.itemRow}>
-              <View>
-                <Text style={styles.itemName}>{item.dishName}</Text>
-                <Text style={styles.itemCourse}>{item.course}</Text>
-              </View>
-              <Text style={styles.itemPrice}>R{item.price}</Text>
-            </View>
+           
+<View style={styles.itemRow}>
+  <View style={styles.itemInfo}>
+    <Text style={styles.itemName}>{item.dishName}</Text>
+    <View style={styles.coursePill}>
+      <Text style={styles.coursePillText}>{item.course}</Text>
+    </View>
+  </View>
+  <Text style={styles.itemPrice}>R{item.price.toFixed(2)}</Text>
+</View>
           )}
         />
       )}
@@ -39,22 +42,28 @@ export default function MenuListScreen({ items, onAddPress }: MenuListScreenProp
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
-  title: { fontSize: 22, fontWeight: '600', textAlign: 'center', marginBottom: 20 },
-  emptyContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  emptyText: { fontSize: 16, fontWeight: '600', color: '#666' },
-  emptySubtext: { fontSize: 13, color: '#999', marginTop: 6 },
+  container: { flex: 1, padding: 20, backgroundColor: '#FAFAF9' },
+  title: { fontSize: 28, fontWeight: '700', color: '#2A2118', marginTop: 10, marginBottom: 24, letterSpacing: -0.5 },
+  emptyContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', paddingBottom: 80 },
+  emptyText: { fontSize: 17, fontWeight: '600', color: '#8A8178' },
+  emptySubtext: { fontSize: 13, color: '#B0A89C', marginTop: 6 },
   listContent: { paddingBottom: 10 },
   itemRow: {
     flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
-    borderWidth: 1, borderColor: '#eee', borderRadius: 10, padding: 14, marginBottom: 10,
+    backgroundColor: '#fff', borderRadius: 16, padding: 16, marginBottom: 12,
+    shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.06, shadowRadius: 6,
+    elevation: 2,
   },
-  itemName: { fontSize: 15, fontWeight: '600' },
-  itemCourse: { fontSize: 12, color: '#888', marginTop: 2 },
-  itemPrice: { fontSize: 15, fontWeight: '500' },
+  itemInfo: { flex: 1, marginRight: 10 },
+  itemName: { fontSize: 16, fontWeight: '700', color: '#2A2118', marginBottom: 6 },
+  coursePill: { backgroundColor: '#FBEDE4', alignSelf: 'flex-start', paddingHorizontal: 10, paddingVertical: 3, borderRadius: 20 },
+  coursePillText: { fontSize: 11, fontWeight: '600', color: '#B04E1F' },
+  itemPrice: { fontSize: 17, fontWeight: '700', color: '#D35400' },
   addButton: {
-    borderWidth: 2, borderColor: '#D35400', borderRadius: 12,
-    paddingVertical: 14, alignItems: 'center', marginTop: 10,
+    backgroundColor: '#D35400', borderRadius: 14,
+    paddingVertical: 16, alignItems: 'center', marginTop: 8,
+    shadowColor: '#D35400', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.25, shadowRadius: 8,
+    elevation: 4,
   },
-  addButtonText: { color: '#D35400', fontWeight: '700', fontSize: 15 },
+  addButtonText: { color: '#fff', fontWeight: '700', fontSize: 16 },
 });

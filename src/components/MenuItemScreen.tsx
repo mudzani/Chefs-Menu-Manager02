@@ -83,46 +83,21 @@ export default function AddMenuItemScreen({ onSave }: AddMenuItemScreenProps) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    padding: 20,
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: '700',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
-    marginBottom: 8,
-    color: '#333',
-  },
+  container: { padding: 20, backgroundColor: '#FAFAF9', flexGrow: 1 },
+  title: { fontSize: 24, fontWeight: '700', color: '#2A2118', textAlign: 'center', marginTop: 10, marginBottom: 28 },
+  label: { fontSize: 13, fontWeight: '600', color: '#8A8178', marginBottom: 6, marginTop: 16, textTransform: 'uppercase', letterSpacing: 0.3 },
   input: {
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 10,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    marginBottom: 16,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff', borderWidth: 1.5, borderColor: '#EDE7DF', borderRadius: 12,
+    paddingHorizontal: 16, paddingVertical: 13, fontSize: 15, color: '#2A2118',
   },
-  textArea: {
-    minHeight: 96,
-    textAlignVertical: 'top',
-  },
+  inputError: { borderColor: '#D32F2F' },
+  errorText: { color: '#D32F2F', fontSize: 12, marginTop: 5, fontWeight: '500' },
+  multiline: { height: 90, textAlignVertical: 'top' },
+  pickerWrapper: { backgroundColor: '#fff', borderWidth: 1.5, borderColor: '#EDE7DF', borderRadius: 12, overflow: 'hidden' },
   saveButton: {
-    backgroundColor: '#D35400',
-    borderRadius: 12,
-    paddingVertical: 14,
-    alignItems: 'center',
-    marginTop: 8,
+    backgroundColor: '#D35400', borderRadius: 14, paddingVertical: 16, alignItems: 'center', marginTop: 32,
+    shadowColor: '#D35400', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.25, shadowRadius: 8,
+    elevation: 4,
   },
-  saveButtonText: {
-    color: '#fff',
-    fontSize: 15,
-    fontWeight: '700',
-  },
+  saveButtonText: { color: '#fff', fontWeight: '700', fontSize: 16 },
 });
