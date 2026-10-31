@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import AddMenuItemScreen from '../components/MenuItemScreen';
 import MenuListScreen from '../components/MenuListScreen';
-import { MenuItem } from '../types';
+import { MenuItem, MenuItemInput } from '../types';
 
 type ScreenName = 'list' | 'add';
 
@@ -10,7 +10,11 @@ export default function Index() {
   const [screen, setScreen] = useState<ScreenName>('list');
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
 
-  const handleSave = (newItem: MenuItem) => {
+  const handleSave = (values: MenuItemInput) => {
+    const newItem: MenuItem = {
+      ...values,
+      id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+    };
     setMenuItems((prevItems) => [...prevItems, newItem]);
     setScreen('list');
   };

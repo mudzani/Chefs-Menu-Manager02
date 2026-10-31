@@ -6,10 +6,10 @@ import {
     TextInput,
     TouchableOpacity
 } from 'react-native';
-import { MenuItem } from '../types';
+import { MenuItemInput } from '../types';
 
 interface AddMenuItemScreenProps {
-  onSave: (newItem: MenuItem) => void;
+  onSave: (newItem: MenuItemInput) => void;
 }
 
 export default function AddMenuItemScreen({ onSave }: AddMenuItemScreenProps) {

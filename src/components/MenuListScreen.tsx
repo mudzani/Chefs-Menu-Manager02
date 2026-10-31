@@ -18,7 +18,7 @@ export default function MenuListScreen({ items, onAddPress }: MenuListScreenProp
       ) : (
         <FlatList
           data={items}
-          keyExtractor={(_item: MenuItem, index: number) => index.toString()}
+          keyExtractor={(item: MenuItem) => item.id}
           contentContainerStyle={styles.listContent}
           renderItem={({ item }: { item: MenuItem }) => (
            
