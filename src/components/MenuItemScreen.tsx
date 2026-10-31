@@ -7,10 +7,12 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
-import { MENU_COURSES, MenuCourse, MenuItemInput } from '../types';
+import { MENU_COURSES, MenuCourse, MenuItem, MenuItemInput } from '../types';
 
 interface AddMenuItemScreenProps {
+  initialItem?: MenuItem;
   onSave: (newItem: MenuItemInput) => void;
+  onCancel: () => void;
 }
 
 interface FormErrors {
@@ -20,11 +22,11 @@ interface FormErrors {
   price?: string;
 }
 
-export default function AddMenuItemScreen({ onSave }: AddMenuItemScreenProps) {
-  const [dishName, setDishName] = useState('');
-  const [description, setDescription] = useState('');
-  const [course, setCourse] = useState<MenuCourse | ''>('');
-  const [price, setPrice] = useState('');
+export default function AddMenuItemScreen({ initialItem, onSave, onCancel }: AddMenuItemScreenProps) {
+  const [dishName, setDishName] = useState(initialItem?.dishName ?? '');
+  const [description, setDescription] = useState(initialItem?.description ?? '');
+  const [course, setCourse] = useState<MenuCourse | ''>(initialItem?.course ?? '');
+  const [price, setPrice] = useState(initialItem ? String(initialItem.price) : '');
   const [errors, setErrors] = useState<FormErrors>({});
 
   const handleSave = () => {
@@ -56,7 +58,7 @@ export default function AddMenuItemScreen({ onSave }: AddMenuItemScreenProps) {
 
   return (
     <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
-      <Text style={styles.title}>Add menu item</Text>
+      <Text style={styles.title}>{initialItem ? 'Edit menu item' : 'Add menu item'}</Text>
 
       <Text style={styles.label}>Dish name</Text>
       <TextInput
@@ -121,8 +123,13 @@ export default function AddMenuItemScreen({ onSave }: AddMenuItemScreenProps) {
       {errors.price ? <Text style={styles.errorText}>{errors.price}</Text> : null}
 
       <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-        <Text style={styles.saveButtonText}>Save item</Text>
+        <Text style={styles.saveButtonText}>{initialItem ? 'Save changes' : 'Save item'}</Text>
       </TouchableOpacity>
+      {initialItem ? (
+        <TouchableOpacity style={styles.cancelButton} onPress={onCancel} accessibilityRole="button">
+          <Text style={styles.cancelButtonText}>Cancel</Text>
+        </TouchableOpacity>
+      ) : null}
     </ScrollView>
   );
 }
@@ -149,4 +156,6 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   saveButtonText: { color: '#fff', fontWeight: '700', fontSize: 16 },
+  cancelButton: { alignItems: 'center', paddingVertical: 14 },
+  cancelButtonText: { color: '#8A8178', fontSize: 13, fontWeight: '700' },
 });

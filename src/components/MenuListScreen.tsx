@@ -4,9 +4,10 @@ import { MenuItem } from '../types';
 interface MenuListScreenProps {
   items: MenuItem[];
   onAddPress: () => void;
+  onEditPress: (item: MenuItem) => void;
 }
 
-export default function MenuListScreen({ items, onAddPress }: MenuListScreenProps) {
+export default function MenuListScreen({ items, onAddPress, onEditPress }: MenuListScreenProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>My Menu</Text>
@@ -21,16 +22,24 @@ export default function MenuListScreen({ items, onAddPress }: MenuListScreenProp
           keyExtractor={(item: MenuItem) => item.id}
           contentContainerStyle={styles.listContent}
           renderItem={({ item }: { item: MenuItem }) => (
-           
-<View style={styles.itemRow}>
-  <View style={styles.itemInfo}>
-    <Text style={styles.itemName}>{item.dishName}</Text>
-    <View style={styles.coursePill}>
-      <Text style={styles.coursePillText}>{item.course}</Text>
-    </View>
-  </View>
-  <Text style={styles.itemPrice}>R{item.price.toFixed(2)}</Text>
-</View>
+            <View style={styles.itemRow}>
+              <View style={styles.itemInfo}>
+                <Text style={styles.itemName}>{item.dishName}</Text>
+                <View style={styles.coursePill}>
+                  <Text style={styles.coursePillText}>{item.course}</Text>
+                </View>
+              </View>
+              <View style={styles.itemActions}>
+                <Text style={styles.itemPrice}>R{item.price.toFixed(2)}</Text>
+                <TouchableOpacity
+                  accessibilityRole="button"
+                  accessibilityLabel={`Edit ${item.dishName}`}
+                  onPress={() => onEditPress(item)}
+                  style={styles.editButton}>
+                  <Text style={styles.editButtonText}>Edit</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
           )}
         />
       )}
@@ -55,10 +64,13 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   itemInfo: { flex: 1, marginRight: 10 },
+  itemActions: { alignItems: 'flex-end', gap: 8 },
   itemName: { fontSize: 16, fontWeight: '700', color: '#2A2118', marginBottom: 6 },
   coursePill: { backgroundColor: '#FBEDE4', alignSelf: 'flex-start', paddingHorizontal: 10, paddingVertical: 3, borderRadius: 20 },
   coursePillText: { fontSize: 11, fontWeight: '600', color: '#B04E1F' },
   itemPrice: { fontSize: 17, fontWeight: '700', color: '#D35400' },
+  editButton: { borderWidth: 1, borderColor: '#EDE7DF', borderRadius: 8, paddingHorizontal: 11, paddingVertical: 6 },
+  editButtonText: { color: '#2A2118', fontSize: 12, fontWeight: '700' },
   addButton: {
     backgroundColor: '#D35400', borderRadius: 14,
     paddingVertical: 16, alignItems: 'center', marginTop: 8,

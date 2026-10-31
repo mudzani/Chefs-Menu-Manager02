@@ -1,30 +1,63 @@
 import { useState } from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { Alert, SafeAreaView, StyleSheet } from 'react-native';
 import AddMenuItemScreen from '../components/MenuItemScreen';
 import MenuListScreen from '../components/MenuListScreen';
 import { MenuItem, MenuItemInput } from '../types';
 
-type ScreenName = 'list' | 'add';
+type ScreenName = 'list' | 'add' | 'edit';
 
 export default function Index() {
   const [screen, setScreen] = useState<ScreenName>('list');
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  const [editingItem, setEditingItem] = useState<MenuItem | undefined>(undefined);
+
+  const handleAddPress = () => {
+    setEditingItem(undefined);
+    setScreen('add');
+  };
+
+  const handleEditPress = (item: MenuItem) => {
+    setEditingItem(item);
+    setScreen('edit');
+  };
 
   const handleSave = (values: MenuItemInput) => {
-    const newItem: MenuItem = {
-      ...values,
-      id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-    };
-    setMenuItems((prevItems) => [...prevItems, newItem]);
+    if (screen === 'edit' && editingItem) {
+      setMenuItems((currentItems) =>
+        currentItems.map((item) =>
+          item.id === editingItem.id ? { ...values, id: item.id } : item,
+        ),
+      );
+      Alert.alert('Menu item updated', `${values.dishName} has been updated successfully.`);
+    } else {
+      const newItem: MenuItem = {
+        ...values,
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      };
+      setMenuItems((prevItems) => [...prevItems, newItem]);
+    }
+
+    setEditingItem(undefined);
     setScreen('list');
   };
 
   return (
     <SafeAreaView style={styles.container}>
       {screen === 'list' ? (
-        <MenuListScreen items={menuItems} onAddPress={() => setScreen('add')} />
+        <MenuListScreen
+          items={menuItems}
+          onAddPress={handleAddPress}
+          onEditPress={handleEditPress}
+        />
       ) : (
-        <AddMenuItemScreen onSave={handleSave} />
+        <AddMenuItemScreen
+          initialItem={screen === 'edit' ? editingItem : undefined}
+          onSave={handleSave}
+          onCancel={() => {
+            setEditingItem(undefined);
+            setScreen('list');
+          }}
+        />
       )}
     </SafeAreaView>
   );
