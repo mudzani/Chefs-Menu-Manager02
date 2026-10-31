@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { MenuItem } from '../types';
+import { CourseFilter, MENU_COURSES, MenuItem } from '../types';
+import { filterMenuItems } from '../utils/menuHelpers';
 import MenuItemCard from './MenuItemCard';
 
 interface MenuListScreenProps {
@@ -10,6 +11,8 @@ interface MenuListScreenProps {
   onDeletePress: (item: MenuItem) => void;
 }
 
+const FILTER_OPTIONS: CourseFilter[] = ['All', ...MENU_COURSES];
+
 export default function MenuListScreen({
   items,
   onAddPress,
@@ -17,10 +20,9 @@ export default function MenuListScreen({
   onDeletePress,
 }: MenuListScreenProps) {
   const [searchText, setSearchText] = useState('');
-  const normalizedSearch = searchText.trim().toLowerCase();
-  const visibleItems = items.filter((item) =>
-    item.dishName.toLowerCase().includes(normalizedSearch),
-  );
+  const [courseFilter, setCourseFilter] = useState<CourseFilter>('All');
+  const visibleItems = filterMenuItems(items, searchText, courseFilter);
+  const hasActiveFilters = searchText.trim().length > 0 || courseFilter !== 'All';
 
   return (
     <View style={styles.container}>
@@ -43,6 +45,37 @@ export default function MenuListScreen({
             <Text style={styles.clearButtonText}>Clear</Text>
           </TouchableOpacity>
         ) : null}
+      </View>
+      <View style={styles.filterHeader}>
+        <Text style={styles.filterLabel}>Filter by course</Text>
+        {hasActiveFilters ? (
+          <TouchableOpacity
+            accessibilityRole="button"
+            accessibilityLabel="Clear search and course filters"
+            onPress={() => {
+              setSearchText('');
+              setCourseFilter('All');
+            }}>
+            <Text style={styles.clearFiltersText}>Clear Filters</Text>
+          </TouchableOpacity>
+        ) : null}
+      </View>
+      <View style={styles.filterOptions}>
+        {FILTER_OPTIONS.map((option) => {
+          const selected = courseFilter === option;
+          return (
+            <TouchableOpacity
+              key={option}
+              accessibilityRole="button"
+              accessibilityState={{ selected }}
+              onPress={() => setCourseFilter(option)}
+              style={[styles.filterChip, selected ? styles.filterChipSelected : null]}>
+              <Text style={[styles.filterChipText, selected ? styles.filterChipTextSelected : null]}>
+                {option}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
       </View>
       {items.length === 0 ? (
         <View style={styles.emptyContainer}>
@@ -90,6 +123,14 @@ const styles = StyleSheet.create({
   },
   clearButton: { paddingVertical: 10, paddingLeft: 12 },
   clearButtonText: { color: '#B04E1F', fontSize: 13, fontWeight: '700' },
+  filterHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 9 },
+  filterLabel: { color: '#2A2118', fontSize: 12, fontWeight: '700' },
+  clearFiltersText: { color: '#B04E1F', fontSize: 12, fontWeight: '700' },
+  filterOptions: { flexDirection: 'row', flexWrap: 'wrap', gap: 7, marginBottom: 16 },
+  filterChip: { borderWidth: 1, borderColor: '#EDE7DF', backgroundColor: '#fff', borderRadius: 20, paddingHorizontal: 11, paddingVertical: 8 },
+  filterChipSelected: { backgroundColor: '#FBEDE4', borderColor: '#D35400' },
+  filterChipText: { color: '#8A8178', fontSize: 11, fontWeight: '600' },
+  filterChipTextSelected: { color: '#B04E1F', fontWeight: '800' },
   listContent: { paddingBottom: 10 },
   addButton: {
     backgroundColor: '#D35400', borderRadius: 14,

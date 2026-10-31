@@ -2,6 +2,8 @@ export const MENU_COURSES = ['Starter', 'Main Course', 'Dessert'] as const;
 
 export type MenuCourse = (typeof MENU_COURSES)[number];
 
+export type CourseFilter = 'All' | MenuCourse;
+
 export interface MenuItem {
   id: string;
   dishName: string;
