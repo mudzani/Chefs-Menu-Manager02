@@ -5,9 +5,15 @@ interface MenuListScreenProps {
   items: MenuItem[];
   onAddPress: () => void;
   onEditPress: (item: MenuItem) => void;
+  onDeletePress: (item: MenuItem) => void;
 }
 
-export default function MenuListScreen({ items, onAddPress, onEditPress }: MenuListScreenProps) {
+export default function MenuListScreen({
+  items,
+  onAddPress,
+  onEditPress,
+  onDeletePress,
+}: MenuListScreenProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>My Menu</Text>
@@ -31,13 +37,22 @@ export default function MenuListScreen({ items, onAddPress, onEditPress }: MenuL
               </View>
               <View style={styles.itemActions}>
                 <Text style={styles.itemPrice}>R{item.price.toFixed(2)}</Text>
-                <TouchableOpacity
-                  accessibilityRole="button"
-                  accessibilityLabel={`Edit ${item.dishName}`}
-                  onPress={() => onEditPress(item)}
-                  style={styles.editButton}>
-                  <Text style={styles.editButtonText}>Edit</Text>
-                </TouchableOpacity>
+                <View style={styles.actionButtons}>
+                  <TouchableOpacity
+                    accessibilityRole="button"
+                    accessibilityLabel={`Edit ${item.dishName}`}
+                    onPress={() => onEditPress(item)}
+                    style={styles.editButton}>
+                    <Text style={styles.editButtonText}>Edit</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    accessibilityRole="button"
+                    accessibilityLabel={`Delete ${item.dishName}`}
+                    onPress={() => onDeletePress(item)}
+                    style={styles.deleteButton}>
+                    <Text style={styles.deleteButtonText}>Delete</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           )}
@@ -65,12 +80,15 @@ const styles = StyleSheet.create({
   },
   itemInfo: { flex: 1, marginRight: 10 },
   itemActions: { alignItems: 'flex-end', gap: 8 },
+  actionButtons: { flexDirection: 'row', gap: 8 },
   itemName: { fontSize: 16, fontWeight: '700', color: '#2A2118', marginBottom: 6 },
   coursePill: { backgroundColor: '#FBEDE4', alignSelf: 'flex-start', paddingHorizontal: 10, paddingVertical: 3, borderRadius: 20 },
   coursePillText: { fontSize: 11, fontWeight: '600', color: '#B04E1F' },
   itemPrice: { fontSize: 17, fontWeight: '700', color: '#D35400' },
   editButton: { borderWidth: 1, borderColor: '#EDE7DF', borderRadius: 8, paddingHorizontal: 11, paddingVertical: 6 },
   editButtonText: { color: '#2A2118', fontSize: 12, fontWeight: '700' },
+  deleteButton: { backgroundColor: '#FDECEB', borderRadius: 8, paddingHorizontal: 11, paddingVertical: 6 },
+  deleteButtonText: { color: '#B42318', fontSize: 12, fontWeight: '700' },
   addButton: {
     backgroundColor: '#D35400', borderRadius: 14,
     paddingVertical: 16, alignItems: 'center', marginTop: 8,

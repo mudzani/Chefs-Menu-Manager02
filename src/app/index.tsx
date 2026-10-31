@@ -21,6 +21,26 @@ export default function Index() {
     setScreen('edit');
   };
 
+  const handleDeletePress = (item: MenuItem) => {
+    Alert.alert(
+      'Delete menu item?',
+      `Are you sure you want to delete ${item.dishName}? This action cannot be undone.`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            setMenuItems((currentItems) =>
+              currentItems.filter((currentItem) => currentItem.id !== item.id),
+            );
+            Alert.alert('Menu item deleted', `${item.dishName} has been removed from your menu.`);
+          },
+        },
+      ],
+    );
+  };
+
   const handleSave = (values: MenuItemInput) => {
     if (screen === 'edit' && editingItem) {
       setMenuItems((currentItems) =>
@@ -48,6 +68,7 @@ export default function Index() {
           items={menuItems}
           onAddPress={handleAddPress}
           onEditPress={handleEditPress}
+          onDeletePress={handleDeletePress}
         />
       ) : (
         <AddMenuItemScreen
