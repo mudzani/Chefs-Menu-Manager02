@@ -7,6 +7,7 @@ export function filterMenuItems(
 ): MenuItem[] {
   const normalizedSearch = searchText.trim().toLocaleLowerCase();
 
+  // Both conditions must match, so choosing a course narrows the name search.
   return items.filter((item) => {
     const matchesName = item.dishName.toLocaleLowerCase().includes(normalizedSearch);
     const matchesCourse = courseFilter === 'All' || item.course === courseFilter;
@@ -20,6 +21,7 @@ export function getMenuStatistics(items: MenuItem[]) {
     'Main Course': 0,
     Dessert: 0,
   };
+  // Count each course while summing prices, then average the unrounded total.
   const totalPrice = items.reduce((sum, item) => {
     courseCounts[item.course] += 1;
     return sum + item.price;
@@ -27,6 +29,7 @@ export function getMenuStatistics(items: MenuItem[]) {
 
   return {
     totalItems: items.length,
+    // Avoid dividing by zero when the menu has no items.
     averagePrice: items.length === 0 ? 0 : totalPrice / items.length,
     courseCounts,
   };
