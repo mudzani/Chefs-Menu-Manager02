@@ -131,17 +131,7 @@ scripts/
 
 Menu items are stored in in-memory React state. They remain available while the running app retains that state, but are **not permanently stored**. Restarting the application resets the menu. This project does not currently implement a database, local persistent storage, or cloud synchronization.
 
-## Testing and Verification
 
-There is no automated test script or test suite in the project.
-
-Checks performed during development include:
-
-- Focused TypeScript checks of the menu types, helpers, components, and app flow: passed.
-- Helper-level checks for search, course filtering, and statistics calculations: passed. These checks covered matching, empty data, price calculations, and changes to menu data.
-- Browser-based UI inspection of the web app at 320px, 375px, and 768px viewport widths: performed. The inspected layouts had no horizontal overflow; add, edit/cancel, empty-menu, and no-results interactions were also checked.
-- Full-project `npx tsc --noEmit`: previously reported TypeScript errors in the unused starter tab components and theme hook. The focused checks of the menu flow passed.
-- Manual testing on an Android emulator or physical Android device: **not performed**.
 
 ## Changelog
 
@@ -153,7 +143,6 @@ Checks performed during development include:
 - Extracted reusable menu item cards and improved small-screen layout and empty states.
 - Added a Back to menu action with confirmation before discarding unsaved form changes.
 
-## Repository and Demo
+## Repository 
 
 - GitHub repository: [mudzani/Chefs-Menu-Manager02](https://github.com/mudzani/Chefs-Menu-Manager02)
-- Demo video: No YouTube demonstration link is currently provided.
