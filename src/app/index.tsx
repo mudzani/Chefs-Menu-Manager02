@@ -8,6 +8,7 @@ type ScreenName = 'list' | 'add' | 'edit';
 
 export default function Index() {
   const [screen, setScreen] = useState<ScreenName>('list');
+  // The parent owns the full menu so list, edit, and delete actions stay in sync.
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [editingItem, setEditingItem] = useState<MenuItem | undefined>(undefined);
 
@@ -31,6 +32,7 @@ export default function Index() {
           text: 'Delete',
           style: 'destructive',
           onPress: () => {
+            // Confirm first, then use the stable ID to remove only this item.
             setMenuItems((currentItems) =>
               currentItems.filter((currentItem) => currentItem.id !== item.id),
             );
@@ -43,6 +45,7 @@ export default function Index() {
 
   const handleSave = (values: MenuItemInput) => {
     if (screen === 'edit' && editingItem) {
+      // Editing replaces the matching item but keeps its ID for stable list identity.
       setMenuItems((currentItems) =>
         currentItems.map((item) =>
           item.id === editingItem.id ? { ...values, id: item.id } : item,
@@ -50,6 +53,7 @@ export default function Index() {
       );
       Alert.alert('Menu item updated', `${values.dishName} has been updated successfully.`);
     } else {
+      // A new item needs its own ID before it is added to the menu.
       const newItem: MenuItem = {
         ...values,
         id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
