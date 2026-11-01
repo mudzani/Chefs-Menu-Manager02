@@ -21,8 +21,10 @@ export default function MenuListScreen({
   onEditPress,
   onDeletePress,
 }: MenuListScreenProps) {
+  // Keep the name query separate so it can be combined with any course choice.
   const [searchText, setSearchText] = useState('');
   const [courseFilter, setCourseFilter] = useState<CourseFilter>('All');
+  // Results include only dishes matching both the name query and selected course.
   const visibleItems = filterMenuItems(items, searchText, courseFilter);
   const hasActiveFilters = searchText.trim().length > 0 || courseFilter !== 'All';
 
@@ -36,6 +38,7 @@ export default function MenuListScreen({
       ListHeaderComponent={
         <View>
           <Text style={styles.title}>My Menu</Text>
+          {/* Statistics stay based on the full menu, regardless of visible results. */}
           <MenuStatistics items={items} />
           {items.length > 0 ? (
             <View>
@@ -94,6 +97,7 @@ export default function MenuListScreen({
           ) : null}
         </View>
       }
+      /* Separate a menu with no items from results hidden by the current filters. */
       ListEmptyComponent={items.length === 0 ? (
         <View style={styles.emptyState}>
           <Text style={styles.emptyTitle}>Your menu is empty</Text>
