@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
+import { menuColors } from '../constants/menuTheme';
 import { MENU_COURSES, MenuCourse, MenuItem, MenuItemInput } from '../types';
 
 interface AddMenuItemScreenProps {
@@ -135,27 +136,28 @@ export default function AddMenuItemScreen({ initialItem, onSave, onCancel }: Add
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20, backgroundColor: '#FAFAF9', flexGrow: 1 },
-  title: { fontSize: 24, fontWeight: '700', color: '#2A2118', textAlign: 'center', marginTop: 10, marginBottom: 28 },
-  label: { fontSize: 13, fontWeight: '600', color: '#8A8178', marginBottom: 6, marginTop: 16, textTransform: 'uppercase', letterSpacing: 0.3 },
+  container: { padding: 20, backgroundColor: menuColors.background, flexGrow: 1 },
+  title: { fontSize: 24, fontWeight: '700', color: menuColors.text, textAlign: 'center', marginTop: 10, marginBottom: 28 },
+  label: { fontSize: 13, fontWeight: '700', color: menuColors.muted, marginBottom: 6, marginTop: 16, textTransform: 'uppercase', letterSpacing: 0.3 },
   input: {
-    backgroundColor: '#fff', borderWidth: 1.5, borderColor: '#EDE7DF', borderRadius: 12,
-    paddingHorizontal: 16, paddingVertical: 13, fontSize: 15, color: '#2A2118',
+    minHeight: 46, backgroundColor: menuColors.surface, borderWidth: 1, borderColor: menuColors.border,
+    borderRadius: 12, paddingHorizontal: 16, paddingVertical: 12, fontSize: 15, color: menuColors.text,
   },
-  inputError: { borderColor: '#D32F2F' },
-  errorText: { color: '#D32F2F', fontSize: 12, marginTop: 5, fontWeight: '500' },
+  inputError: { borderColor: menuColors.danger },
+  errorText: { color: menuColors.danger, fontSize: 12, marginTop: 5, fontWeight: '500' },
   multiline: { height: 90, textAlignVertical: 'top' },
   courseOptions: { gap: 8 },
-  courseOption: { backgroundColor: '#fff', borderColor: '#EDE7DF', borderWidth: 1.5, borderRadius: 12, paddingHorizontal: 16, paddingVertical: 13 },
-  courseOptionSelected: { backgroundColor: '#FBEDE4', borderColor: '#D35400' },
-  courseOptionText: { color: '#8A8178', fontSize: 15, fontWeight: '600' },
-  courseOptionTextSelected: { color: '#B04E1F', fontWeight: '700' },
+  courseOption: { minHeight: 44, justifyContent: 'center', backgroundColor: menuColors.surface, borderColor: menuColors.border, borderWidth: 1, borderRadius: 12, paddingHorizontal: 16, paddingVertical: 10 },
+  courseOptionSelected: { backgroundColor: menuColors.primaryLight, borderColor: menuColors.primary },
+  courseOptionText: { color: menuColors.muted, fontSize: 15, fontWeight: '600' },
+  courseOptionTextSelected: { color: menuColors.primary, fontWeight: '700' },
   saveButton: {
-    backgroundColor: '#D35400', borderRadius: 14, paddingVertical: 16, alignItems: 'center', marginTop: 32,
-    shadowColor: '#D35400', shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.25, shadowRadius: 8,
+    minHeight: 48, justifyContent: 'center', backgroundColor: menuColors.primary, borderRadius: 14,
+    paddingHorizontal: 16, paddingVertical: 14, alignItems: 'center', marginTop: 32,
+    shadowColor: menuColors.primary, shadowOffset: { width: 0, height: 4 }, shadowOpacity: 0.2, shadowRadius: 8,
     elevation: 4,
   },
-  saveButtonText: { color: '#fff', fontWeight: '700', fontSize: 16 },
-  cancelButton: { alignItems: 'center', paddingVertical: 14 },
-  cancelButtonText: { color: '#8A8178', fontSize: 13, fontWeight: '700' },
+  saveButtonText: { color: menuColors.surface, fontWeight: '700', fontSize: 16 },
+  cancelButton: { minHeight: 44, justifyContent: 'center', alignItems: 'center', paddingVertical: 10 },
+  cancelButtonText: { color: menuColors.muted, fontSize: 13, fontWeight: '700' },
 });

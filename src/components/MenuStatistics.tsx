@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
+import { menuColors } from '../constants/menuTheme';
 import { MenuItem } from '../types';
 import { formatPrice, getMenuStatistics } from '../utils/menuHelpers';
 
@@ -43,19 +44,19 @@ export default function MenuStatistics({ items }: MenuStatisticsProps) {
 
 const styles = StyleSheet.create({
   container: { marginBottom: 22 },
-  sectionTitle: { color: '#2A2118', fontSize: 17, fontWeight: '800', marginBottom: 10 },
-  summaryRow: { flexDirection: 'row', gap: 10 },
+  sectionTitle: { color: menuColors.text, fontSize: 17, fontWeight: '800', marginBottom: 10 },
+  summaryRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 10 },
   summaryCard: {
-    flex: 1, backgroundColor: '#fff', borderColor: '#EDE7DF', borderWidth: 1,
+    flex: 1, flexBasis: 130, backgroundColor: menuColors.surface, borderColor: menuColors.border, borderWidth: 1,
     borderRadius: 14, padding: 14,
   },
-  label: { color: '#81776D', fontSize: 11, fontWeight: '600' },
-  value: { color: '#2A2118', fontSize: 20, fontWeight: '800', marginTop: 6 },
+  label: { color: menuColors.muted, fontSize: 11, fontWeight: '600' },
+  value: { color: menuColors.text, fontSize: 20, fontWeight: '800', marginTop: 6 },
   courseCard: {
-    backgroundColor: '#fff', borderColor: '#EDE7DF', borderWidth: 1,
+    backgroundColor: menuColors.surface, borderColor: menuColors.border, borderWidth: 1,
     borderRadius: 14, padding: 14, marginTop: 10,
   },
   courseRow: { flexDirection: 'row', justifyContent: 'space-between', paddingTop: 9 },
-  courseName: { color: '#2A2118', fontSize: 13 },
-  courseCount: { color: '#B94E1D', fontSize: 13, fontWeight: '800' },
+  courseName: { color: menuColors.text, fontSize: 13 },
+  courseCount: { color: menuColors.primary, fontSize: 13, fontWeight: '800' },
 });
