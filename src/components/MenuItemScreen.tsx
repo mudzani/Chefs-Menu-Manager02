@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import {
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Alert,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { menuColors } from '../constants/menuTheme';
 import { MENU_COURSES, MenuCourse, MenuItem, MenuItemInput } from '../types';
@@ -29,6 +30,11 @@ export default function AddMenuItemScreen({ initialItem, onSave, onCancel }: Add
   const [course, setCourse] = useState<MenuCourse | ''>(initialItem?.course ?? '');
   const [price, setPrice] = useState(initialItem ? String(initialItem.price) : '');
   const [errors, setErrors] = useState<FormErrors>({});
+  const hasUnsavedChanges =
+    dishName !== (initialItem?.dishName ?? '') ||
+    description !== (initialItem?.description ?? '') ||
+    course !== (initialItem?.course ?? '') ||
+    price !== (initialItem ? String(initialItem.price) : '');
 
   const handleSave = () => {
     const trimmedName = dishName.trim();
@@ -55,6 +61,22 @@ export default function AddMenuItemScreen({ initialItem, onSave, onCancel }: Add
       course,
       price: parsedPrice,
     });
+  };
+
+  const handleBackToMenu = () => {
+    if (!hasUnsavedChanges) {
+      onCancel();
+      return;
+    }
+
+    Alert.alert(
+      'Discard unsaved changes?',
+      'Your changes will be lost if you go back to the menu.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Discard changes', style: 'destructive', onPress: onCancel },
+      ],
+    );
   };
 
   return (
@@ -126,11 +148,12 @@ export default function AddMenuItemScreen({ initialItem, onSave, onCancel }: Add
       <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
         <Text style={styles.saveButtonText}>{initialItem ? 'Save changes' : 'Save item'}</Text>
       </TouchableOpacity>
-      {initialItem ? (
-        <TouchableOpacity style={styles.cancelButton} onPress={onCancel} accessibilityRole="button">
-          <Text style={styles.cancelButtonText}>Cancel</Text>
-        </TouchableOpacity>
-      ) : null}
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={handleBackToMenu}
+        accessibilityRole="button">
+        <Text style={styles.backButtonText}>← Back to menu</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 }
@@ -158,6 +181,10 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   saveButtonText: { color: menuColors.surface, fontWeight: '700', fontSize: 16 },
-  cancelButton: { minHeight: 44, justifyContent: 'center', alignItems: 'center', paddingVertical: 10 },
-  cancelButtonText: { color: menuColors.muted, fontSize: 13, fontWeight: '700' },
+  backButton: {
+    minHeight: 48, justifyContent: 'center', alignItems: 'center', backgroundColor: menuColors.surface,
+    borderWidth: 1, borderColor: menuColors.border, borderRadius: 14, paddingHorizontal: 16,
+    paddingVertical: 12, marginTop: 12,
+  },
+  backButtonText: { color: menuColors.text, fontSize: 14, fontWeight: '700' },
 });
