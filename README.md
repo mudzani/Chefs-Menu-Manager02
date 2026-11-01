@@ -143,6 +143,10 @@ Menu items are stored in in-memory React state. They remain available while the 
 - Extracted reusable menu item cards and improved small-screen layout and empty states.
 - Added a Back to menu action with confirmation before discarding unsaved form changes.
 
+## Video Demonstration
+
+[YouTube Unlisted Video Link — To be added]
+
 ## Repository 
 
 - GitHub repository: [mudzani/Chefs-Menu-Manager02](https://github.com/mudzani/Chefs-Menu-Manager02)
