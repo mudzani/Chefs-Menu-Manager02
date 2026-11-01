@@ -1,7 +1,4 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
+/** Shared colors used by the app's light and dark themes. */
 
 import '@/global.css';
 
@@ -28,13 +25,13 @@ export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
 
 export const Fonts = Platform.select({
   ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
+    /** Default system sans-serif font on iOS. */
     sans: 'system-ui',
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
+    /** System serif font on iOS. */
     serif: 'ui-serif',
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
+    /** System rounded font on iOS. */
     rounded: 'ui-rounded',
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
+    /** System monospaced font on iOS. */
     mono: 'ui-monospace',
   },
   default: {
