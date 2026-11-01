@@ -27,61 +27,70 @@ export default function MenuListScreen({
   const hasActiveFilters = searchText.trim().length > 0 || courseFilter !== 'All';
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>My Menu</Text>
-      <MenuStatistics items={items} />
-      <View style={styles.searchRow}>
-        <TextInput
-          style={styles.searchInput}
-          value={searchText}
-          onChangeText={setSearchText}
-          placeholder="Search by dish name"
-          placeholderTextColor={menuColors.subtle}
-          accessibilityLabel="Search menu items by dish name"
-          returnKeyType="search"
-        />
-        {searchText.length > 0 ? (
-          <TouchableOpacity
-            accessibilityRole="button"
-            accessibilityLabel="Clear search"
-            onPress={() => setSearchText('')}
-            style={styles.clearButton}>
-            <Text style={styles.clearButtonText}>Clear</Text>
-          </TouchableOpacity>
-        ) : null}
-      </View>
-      <View style={styles.filterHeader}>
-        <Text style={styles.filterLabel}>Filter by course</Text>
-        {hasActiveFilters ? (
-          <TouchableOpacity
-            accessibilityRole="button"
-            accessibilityLabel="Clear search and course filters"
-            onPress={() => {
-              setSearchText('');
-              setCourseFilter('All');
-            }}>
-            <Text style={styles.clearFiltersText}>Clear Filters</Text>
-          </TouchableOpacity>
-        ) : null}
-      </View>
-      <View style={styles.filterOptions}>
-        {FILTER_OPTIONS.map((option) => {
-          const selected = courseFilter === option;
-          return (
-            <TouchableOpacity
-              key={option}
-              accessibilityRole="button"
-              accessibilityState={{ selected }}
-              onPress={() => setCourseFilter(option)}
-              style={[styles.filterChip, selected ? styles.filterChipSelected : null]}>
-              <Text style={[styles.filterChipText, selected ? styles.filterChipTextSelected : null]}>
-                {option}
-              </Text>
-            </TouchableOpacity>
-          );
-        })}
-      </View>
-      {items.length === 0 ? (
+    <FlatList
+      style={styles.container}
+      contentContainerStyle={styles.listContent}
+      keyboardShouldPersistTaps="handled"
+      data={visibleItems}
+      keyExtractor={(item: MenuItem) => item.id}
+      ListHeaderComponent={
+        <View>
+          <Text style={styles.title}>My Menu</Text>
+          <MenuStatistics items={items} />
+          <View style={styles.searchRow}>
+            <TextInput
+              style={styles.searchInput}
+              value={searchText}
+              onChangeText={setSearchText}
+              placeholder="Search by dish name"
+              placeholderTextColor={menuColors.subtle}
+              accessibilityLabel="Search menu items by dish name"
+              returnKeyType="search"
+            />
+            {searchText.length > 0 ? (
+              <TouchableOpacity
+                accessibilityRole="button"
+                accessibilityLabel="Clear search"
+                onPress={() => setSearchText('')}
+                style={styles.clearButton}>
+                <Text style={styles.clearButtonText}>Clear</Text>
+              </TouchableOpacity>
+            ) : null}
+          </View>
+          <View style={styles.filterHeader}>
+            <Text style={styles.filterLabel}>Filter by course</Text>
+            {hasActiveFilters ? (
+              <TouchableOpacity
+                accessibilityRole="button"
+                accessibilityLabel="Clear search and course filters"
+                onPress={() => {
+                  setSearchText('');
+                  setCourseFilter('All');
+                }}>
+                <Text style={styles.clearFiltersText}>Clear Filters</Text>
+              </TouchableOpacity>
+            ) : null}
+          </View>
+          <View style={styles.filterOptions}>
+            {FILTER_OPTIONS.map((option) => {
+              const selected = courseFilter === option;
+              return (
+                <TouchableOpacity
+                  key={option}
+                  accessibilityRole="button"
+                  accessibilityState={{ selected }}
+                  onPress={() => setCourseFilter(option)}
+                  style={[styles.filterChip, selected ? styles.filterChipSelected : null]}>
+                  <Text style={[styles.filterChipText, selected ? styles.filterChipTextSelected : null]}>
+                    {option}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        </View>
+      }
+      ListEmptyComponent={items.length === 0 ? (
         <View style={styles.emptyState}>
           <Text style={styles.emptyTitle}>Your menu is empty</Text>
           <Text style={styles.emptyMessage}>
@@ -95,38 +104,23 @@ export default function MenuListScreen({
           </TouchableOpacity>
         </View>
       ) : (
-        visibleItems.length === 0 ? (
-          <View style={styles.emptyState}>
-            <Text style={styles.emptyTitle}>No matching dishes</Text>
-            <Text style={styles.emptyMessage}>
-              Try a different search or course, or clear them to see your full menu.
-            </Text>
-            <TouchableOpacity
-              style={styles.emptyButton}
-              onPress={() => {
-                setSearchText('');
-                setCourseFilter('All');
-              }}
-              accessibilityRole="button">
-              <Text style={styles.emptyButtonText}>Clear search and filters</Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <FlatList
-            data={visibleItems}
-            keyExtractor={(item: MenuItem) => item.id}
-            contentContainerStyle={styles.listContent}
-            renderItem={({ item }: { item: MenuItem }) => (
-              <MenuItemCard
-                item={item}
-                onEditPress={onEditPress}
-                onDeletePress={onDeletePress}
-              />
-            )}
-          />
-        )
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyTitle}>No matching dishes</Text>
+          <Text style={styles.emptyMessage}>
+            Try a different search or course, or clear them to see your full menu.
+          </Text>
+          <TouchableOpacity
+            style={styles.emptyButton}
+            onPress={() => {
+              setSearchText('');
+              setCourseFilter('All');
+            }}
+            accessibilityRole="button">
+            <Text style={styles.emptyButtonText}>Clear search and filters</Text>
+          </TouchableOpacity>
+        </View>
       )}
-      {items.length > 0 ? (
+      ListFooterComponent={items.length > 0 ? (
         <TouchableOpacity
           style={styles.addButton}
           onPress={onAddPress}
@@ -134,12 +128,20 @@ export default function MenuListScreen({
           <Text style={styles.addButtonText}>+ Add menu item</Text>
         </TouchableOpacity>
       ) : null}
-    </View>
+      renderItem={({ item }: { item: MenuItem }) => (
+        <MenuItemCard
+          item={item}
+          onEditPress={onEditPress}
+          onDeletePress={onDeletePress}
+        />
+      )}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20, backgroundColor: menuColors.background },
+  container: { flex: 1, backgroundColor: menuColors.background },
+  listContent: { flexGrow: 1, padding: 20, paddingBottom: 24 },
   title: { fontSize: 28, fontWeight: '700', color: menuColors.text, marginTop: 10, marginBottom: 22, letterSpacing: -0.5 },
   emptyState: {
     backgroundColor: menuColors.surface, borderColor: menuColors.border, borderWidth: 1,
