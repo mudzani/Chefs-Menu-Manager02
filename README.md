@@ -95,8 +95,6 @@ src/
 │   ├── animated-icon.module.css
 │   ├── animated-icon.tsx
 │   ├── animated-icon.web.tsx
-│   ├── app-tabs.tsx
-│   ├── app-tabs.web.tsx
 │   ├── external-link.tsx
 │   ├── hint-row.tsx
 │   ├── themed-text.tsx
