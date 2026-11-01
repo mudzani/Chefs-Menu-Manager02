@@ -127,7 +127,7 @@ export default function MenuListScreen({
           accessibilityRole="button">
           <Text style={styles.addButtonText}>+ Add menu item</Text>
         </TouchableOpacity>
-      ) : null}
+      ) : undefined}
       renderItem={({ item }: { item: MenuItem }) => (
         <MenuItemCard
           item={item}
@@ -173,7 +173,6 @@ const styles = StyleSheet.create({
   filterChipSelected: { backgroundColor: menuColors.primaryLight, borderColor: menuColors.primary },
   filterChipText: { color: menuColors.muted, fontSize: 11, fontWeight: '600' },
   filterChipTextSelected: { color: menuColors.primary, fontWeight: '800' },
-  listContent: { paddingBottom: 10 },
   addButton: {
     minHeight: 48, justifyContent: 'center', backgroundColor: menuColors.primary, borderRadius: 14,
     paddingHorizontal: 16, paddingVertical: 12, alignItems: 'center', marginTop: 8,
