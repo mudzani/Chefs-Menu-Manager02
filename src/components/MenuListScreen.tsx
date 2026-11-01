@@ -37,57 +37,61 @@ export default function MenuListScreen({
         <View>
           <Text style={styles.title}>My Menu</Text>
           <MenuStatistics items={items} />
-          <View style={styles.searchRow}>
-            <TextInput
-              style={styles.searchInput}
-              value={searchText}
-              onChangeText={setSearchText}
-              placeholder="Search by dish name"
-              placeholderTextColor={menuColors.subtle}
-              accessibilityLabel="Search menu items by dish name"
-              returnKeyType="search"
-            />
-            {searchText.length > 0 ? (
-              <TouchableOpacity
-                accessibilityRole="button"
-                accessibilityLabel="Clear search"
-                onPress={() => setSearchText('')}
-                style={styles.clearButton}>
-                <Text style={styles.clearButtonText}>Clear</Text>
-              </TouchableOpacity>
-            ) : null}
-          </View>
-          <View style={styles.filterHeader}>
-            <Text style={styles.filterLabel}>Filter by course</Text>
-            {hasActiveFilters ? (
-              <TouchableOpacity
-                accessibilityRole="button"
-                accessibilityLabel="Clear search and course filters"
-                onPress={() => {
-                  setSearchText('');
-                  setCourseFilter('All');
-                }}>
-                <Text style={styles.clearFiltersText}>Clear Filters</Text>
-              </TouchableOpacity>
-            ) : null}
-          </View>
-          <View style={styles.filterOptions}>
-            {FILTER_OPTIONS.map((option) => {
-              const selected = courseFilter === option;
-              return (
-                <TouchableOpacity
-                  key={option}
-                  accessibilityRole="button"
-                  accessibilityState={{ selected }}
-                  onPress={() => setCourseFilter(option)}
-                  style={[styles.filterChip, selected ? styles.filterChipSelected : null]}>
-                  <Text style={[styles.filterChipText, selected ? styles.filterChipTextSelected : null]}>
-                    {option}
-                  </Text>
-                </TouchableOpacity>
-              );
-            })}
-          </View>
+          {items.length > 0 ? (
+            <View>
+              <View style={styles.searchRow}>
+                <TextInput
+                  style={styles.searchInput}
+                  value={searchText}
+                  onChangeText={setSearchText}
+                  placeholder="Search by dish name"
+                  placeholderTextColor={menuColors.subtle}
+                  accessibilityLabel="Search menu items by dish name"
+                  returnKeyType="search"
+                />
+                {searchText.length > 0 ? (
+                  <TouchableOpacity
+                    accessibilityRole="button"
+                    accessibilityLabel="Clear search"
+                    onPress={() => setSearchText('')}
+                    style={styles.clearButton}>
+                    <Text style={styles.clearButtonText}>Clear</Text>
+                  </TouchableOpacity>
+                ) : null}
+              </View>
+              <View style={styles.filterHeader}>
+                <Text style={styles.filterLabel}>Filter by course</Text>
+                {hasActiveFilters ? (
+                  <TouchableOpacity
+                    accessibilityRole="button"
+                    accessibilityLabel="Clear search and course filters"
+                    onPress={() => {
+                      setSearchText('');
+                      setCourseFilter('All');
+                    }}>
+                    <Text style={styles.clearFiltersText}>Clear Filters</Text>
+                  </TouchableOpacity>
+                ) : null}
+              </View>
+              <View style={styles.filterOptions}>
+                {FILTER_OPTIONS.map((option) => {
+                  const selected = courseFilter === option;
+                  return (
+                    <TouchableOpacity
+                      key={option}
+                      accessibilityRole="button"
+                      accessibilityState={{ selected }}
+                      onPress={() => setCourseFilter(option)}
+                      style={[styles.filterChip, selected ? styles.filterChipSelected : null]}>
+                      <Text style={[styles.filterChipText, selected ? styles.filterChipTextSelected : null]}>
+                        {option}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            </View>
+          ) : null}
         </View>
       }
       ListEmptyComponent={items.length === 0 ? (
