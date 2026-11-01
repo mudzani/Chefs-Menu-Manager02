@@ -3,6 +3,7 @@ import { FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'r
 import { CourseFilter, MENU_COURSES, MenuItem } from '../types';
 import { filterMenuItems } from '../utils/menuHelpers';
 import MenuItemCard from './MenuItemCard';
+import MenuStatistics from './MenuStatistics';
 
 interface MenuListScreenProps {
   items: MenuItem[];
@@ -27,6 +28,7 @@ export default function MenuListScreen({
   return (
     <View style={styles.container}>
       <Text style={styles.title}>My Menu</Text>
+      <MenuStatistics items={items} />
       <View style={styles.searchRow}>
         <TextInput
           style={styles.searchInput}

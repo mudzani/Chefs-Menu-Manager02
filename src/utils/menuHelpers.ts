@@ -13,3 +13,25 @@ export function filterMenuItems(
     return matchesName && matchesCourse;
   });
 }
+
+export function getMenuStatistics(items: MenuItem[]) {
+  const courseCounts = {
+    Starter: 0,
+    'Main Course': 0,
+    Dessert: 0,
+  };
+  const totalPrice = items.reduce((sum, item) => {
+    courseCounts[item.course] += 1;
+    return sum + item.price;
+  }, 0);
+
+  return {
+    totalItems: items.length,
+    averagePrice: items.length === 0 ? 0 : totalPrice / items.length,
+    courseCounts,
+  };
+}
+
+export function formatPrice(price: number): string {
+  return `R${price.toFixed(2)}`;
+}
