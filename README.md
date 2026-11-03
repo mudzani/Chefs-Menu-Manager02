@@ -54,19 +54,29 @@ npm install
 
 ### Start the app
 
-Start the Expo development server:
+#### Recommended: Run on an Android phone using Expo Go
 
-```bash
-npm start
-```
+1. Install **Expo Go** from the Google Play Store on your Android phone.
+2. Make sure your phone and computer are connected to the same Wi-Fi network.
+3. In the project folder, start the Expo development server:
 
-To launch on an available Android emulator, start the emulator first, then run:
+   ```bash
+   npx expo start
+   ```
+
+4. Wait for the QR code to appear in the terminal.
+5. Open **Expo Go** on your Android phone and use its QR code scanner to scan the code.
+6. The app will load on your phone. Keep the Expo development server running while using the app.
+
+#### Alternative: Run on an Android emulator
+
+If you prefer to use an Android emulator, open Android Studio and start a configured emulator first. Then, from the project folder, run:
 
 ```bash
 npm run android
 ```
 
-Alternatively, run `npm start` and press `a` in the Expo terminal to open the app on Android.
+You can also start the Expo development server with `npm start` and press `a` in the terminal to open the app on an available Android emulator.
 
 ## Application Usage
 
