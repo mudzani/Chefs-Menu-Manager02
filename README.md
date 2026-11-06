@@ -153,7 +153,7 @@ Menu items are stored in in-memory React state. They remain available while the 
 
 ## Video Demonstration
 
-[YouTube Unlisted Video Link — To be added]
+https://youtu.be/14E6UyGZr9s
 
 ## Repository 
 
